@@ -2,7 +2,7 @@ import os
 
 from django.views.generic import TemplateView, View
 from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 import stripe
 
 from .models import Item, Order
@@ -42,9 +42,7 @@ class BuyOrder(View):
 
         session = stripe.checkout.Session.create(**params)
 
-        return JsonResponse({
-            "OrderPayUrl": session.url,
-        })
+        return redirect(session.url)
 
 
 class BuyItemView(View):

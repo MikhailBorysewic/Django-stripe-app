@@ -8,16 +8,19 @@ class Item(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name}, id {self.id}"
 
 
 class Discount(models.Model):
     size = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
 
     def __str__(self):
-        return f"{self.size}%"
+        return f"{self.size}, id {self.id}%"
 
 
 class Order(models.Model):
     items = models.ManyToManyField(Item, related_name="items")
     discount = models.OneToOneField(Discount, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"Order, id {self.id}"

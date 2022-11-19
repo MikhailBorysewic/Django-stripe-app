@@ -14,7 +14,7 @@ SECRET_KEY=django-insecure-d()wo(_gc(1&n8(#a@s1c&34gv@!q2y_wcc0r0k&q2dh+w*4&+
 
 # Build/Run container
 ```commandline
-docker-compose build .
+docker-compose build
 docker-compose up
 ```
 
@@ -23,10 +23,11 @@ Open new terminal and run:
 ```commandline
 docker container ls
 ```
-
+Copy created container Name or ID.
 # Run migrations
 ```commandline
 docker exec -it CREATED_CONTAINER_NAME/ID sh
+python manage.py makemigrations
 python manage.py migrate
 ```
 
@@ -35,7 +36,19 @@ python manage.py migrate
 docker exec -it CREATED_CONTAINER_NAME/ID sh
 python manage.py createsuperuser
 ```
+# Usage
 
 Open http://127.0.0.1:8000/admin/ in your browser.
 
-Add items, open http://127.0.0.1:8000/item/{id}/ in yor browser, try make [test](https://stripe.com/docs/testing) purchase.
+Add items:
+![add_items](screenshots/items.png)
+open http://127.0.0.1:8000/item/{id}/ in yor browser:
+![add_item](screenshots/item.png)
+Try make test purchase, press buy button and use [test](https://stripe.com/docs/testing) card data.
+![test_buy](screenshots/test_buy.png)
+
+You can buy several items, go to admin panel and create new Order.
+![test_buy](screenshots/order.png)
+Open http://127.0.0.1:8000/buy/order/{id}/ and you see your Order information:
+![test_buy](screenshots/order_list.png)
+If you want, you can specify discount for order in Admin panel.
