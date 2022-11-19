@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Item(models.Model):
@@ -11,5 +12,12 @@ class Item(models.Model):
 
 
 class Discount(models.Model):
-    size = models.IntegerField()
+    size = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
 
+    def __str__(self):
+        return f"{self.size}%"
+
+
+class Order(models.Model):
+    items = models.ManyToManyField(Item, related_name="items")
+    discount = models.OneToOneField(Discount, on_delete=models.CASCADE, null=True, blank=True)

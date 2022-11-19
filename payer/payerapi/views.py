@@ -5,9 +5,46 @@ from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 import stripe
 
-from .models import Item
+from .models import Item, Order
 
 stripe.api_key = os.environ.get('SECRET_API_KEY')
+
+
+class BuyOrder(View):
+    def get(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        items_id = [item['id'] for item in order.items.values()]
+        items = Item.objects.filter(pk__in=items_id).all()
+        items_data = []
+
+        for item in items:
+            data = {
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': item.name,
+                    },
+                    'unit_amount': int(item.price * 100),
+                },
+                'quantity': 1,
+            }
+            items_data.append(data)
+
+        params = {
+            "line_items": items_data,
+            "mode": "payment",
+            "success_url": f'{request.build_absolute_uri("/")}',
+            "cancel_url": f'{request.build_absolute_uri("/")}',
+        }
+
+        if order.discount:
+            params['discounts'] = [{"coupon": stripe.Coupon.create(duration="once", percent_off=order.discount.size)}]
+
+        session = stripe.checkout.Session.create(**params)
+
+        return JsonResponse({
+            "OrderPayUrl": session.url,
+        })
 
 
 class BuyItemView(View):
