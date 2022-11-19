@@ -43,7 +43,7 @@ Open http://127.0.0.1:8000/admin/ in your browser and login by created credentia
 Go to Items section and add new items:
 ![add_items](screenshots/items.png)
 
-open http://127.0.0.1:8000/item/{item_id}/ in your browser:
+open http://127.0.0.1:8000/item/{item_id} in your browser:
 ![add_item](screenshots/item.png)
 
 Try make test purchase, press buy button and use [test](https://stripe.com/docs/testing) card data.
@@ -52,7 +52,7 @@ Try make test purchase, press buy button and use [test](https://stripe.com/docs/
 You can buy several items, go to admin panel and create new Order.
 ![test_buy](screenshots/order.png)
 
-Open http://127.0.0.1:8000/buy/order/{order_id}/ and you see your Order information:
+Open http://127.0.0.1:8000/buy/order/{order_id} and you see your Order information:
 ![test_buy](screenshots/order_list.png)
 
 If you want, you can specify discount for order in Admin panel.
