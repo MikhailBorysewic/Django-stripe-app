@@ -1,3 +1,10 @@
+# Get your local copy
+
+```commandline
+git clone https://github.com/MikhailBorysewic/Django-stripe-app
+```
+Be sure that you inside project (Django-stripe-app) directory.
+
 # Project run
 
 These steps suppose you have docker-compose installed.
